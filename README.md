@@ -17,12 +17,12 @@ npm run start
 ```
 
 ### Step 2: Choose which device to use
-
+```
 r - reload the app
 d - open developer menu
 i - run on iOS
 a - run on Android
-
+```
 ## API
 
 - [Link](https://hackmd.io/@Koios/BJCVLhupi/https%3A%2F%2Fhackmd.io%2F%40tropical08842%2FHyIL4r1Ph)
