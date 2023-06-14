@@ -1,5 +1,5 @@
-# dabus
+# DaBus
 Final project of software studio.
 
-# Frontend branch
+## Frontend branch
 This branch is the frontend part of our project.
