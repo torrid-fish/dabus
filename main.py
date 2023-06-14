@@ -1,7 +1,7 @@
 import requests
 from pprint import pprint
 import json
-import datetime
+from datetime import datetime
 
 app_id = 'koios1143-d2c91cc5-2c58-4a06'
 app_key = 'b222cb12-0d88-478c-9f47-5c47d120f53b'
@@ -41,28 +41,48 @@ class data():
             'authorization': 'Bearer '+access_token
         }
 
-if __name__ == '__main__':
+def SendRequest(request_url):
+    auth = Auth(app_id, app_key)
+    auth_response = requests.post(auth_url, auth.get_auth_header())
+    d = data(app_id, app_key, auth_response)
+    data_response = requests.get(request_url, headers=d.get_data_header())
+    return json.loads(data_response.text)
+
+def GetFastestBus(route_name):
     city = 'Hsinchu'
-    route_name = '182'
-    args = '?format=JSON&orderby=EstimateTime'
+    args = '?format=JSON&orderby="EstimateTime"'
     api_type = 'EstimatedTimeOfArrival/Streaming/City/{}/{}{}'.format(city, route_name, args)
     request_url = base_url.format(api_type)
 
-    try:
-        d = data(app_id, app_key, auth_response)
-        data_response = requests.get(request_url, headers=d.get_data_header())
-    except:
-        a = Auth(app_id, app_key)
-        auth_response = requests.post(auth_url, a.get_auth_header())
-        d = data(app_id, app_key, auth_response)
-        data_response = requests.get(request_url, headers=d.get_data_header())    
-    #print(auth_response)
-    #pprint(auth_response.text)
-    with open('output.json', 'w') as f:
-        f.write(data_response.text)
-    
-    
+    result = SendRequest(request_url)
+    # index = 0
+    # while(result[index]['PlateNumb'] == '-1'):
+    #     index += 1
+    # index += 1
 
-    #print(data_response)
-    #pprint(data_response.text)
+    current_time = datetime.now()
+    for index in range(len(result)):
+        #if(result[index]['PlateNumb'] == '-1'):
+        #    continue
+        try:
+            result[index]['EstimateTime']
+        except:
+            continue
+        src_trans_time = datetime.fromisoformat(result[index]['SrcTransTime']).replace(tzinfo=None)
+        #print(current_time, src_trans_time)
 
+        with open('output.json', 'w') as f:
+            f.write(json.dumps(result))
+        
+        trans_time_delta = int((current_time - src_trans_time).total_seconds())
+        estimate_time = int((int(result[index]['EstimateTime']) - trans_time_delta) / 60)
+        #print(trans_time_delta, int(result[index]['EstimateTime']))
+
+        print('[{}]\t\t{:2d}mins\t{}'.format(result[index]['StopName']['Zh_tw'], estimate_time, result[index]['PlateNumb']))
+    #return estimate_time
+
+
+
+if __name__ == '__main__':
+    route_name = '182'
+    GetFastestBus(route_name)
