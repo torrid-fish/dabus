@@ -1,0 +1,858 @@
+[
+    {
+        "RouteUID": "HSZ0182",
+        "RouteID": "0182",
+        "RouteName": {
+            "Zh_tw": "182",
+            "En": "182"
+        },
+        "Operators": [
+            {
+                "OperatorID": "45",
+                "OperatorName": {
+                    "Zh_tw": "\u570b\u5149\u5ba2\u904b",
+                    "En": "Kuo-Kuang Bus Co., Ltd."
+                },
+                "OperatorCode": "KuoKuangBus",
+                "OperatorNo": "1101"
+            }
+        ],
+        "SubRouteUID": "HSZ018201",
+        "SubRouteID": "018201",
+        "SubRouteName": {
+            "Zh_tw": "182",
+            "En": "182"
+        },
+        "Direction": 0,
+        "City": "Hsinchu",
+        "CityCode": "HSZ",
+        "Stops": [
+            {
+                "StopUID": "HSZ296965",
+                "StopID": "296965",
+                "StopName": {
+                    "Zh_tw": "\u5317\u5927\u6a4b",
+                    "En": "Bei-Da Bridge"
+                },
+                "StopBoarding": 1,
+                "StopSequence": 1,
+                "StopPosition": {
+                    "PositionLon": 120.96865,
+                    "PositionLat": 24.81033,
+                    "GeoHash": "wsqj0swdt"
+                },
+                "StationID": "130329",
+                "StationGroupID": "300\uff0d275",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296967",
+                "StopID": "296967",
+                "StopName": {
+                    "Zh_tw": "\u5730\u65b9\u6cd5\u9662",
+                    "En": "District Court"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 2,
+                "StopPosition": {
+                    "PositionLon": 120.96778,
+                    "PositionLat": 24.80757,
+                    "GeoHash": "wsqj0sn49"
+                },
+                "StationID": "133841",
+                "StationGroupID": "300\uff0d273",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296968",
+                "StopID": "296968",
+                "StopName": {
+                    "Zh_tw": "\u6771\u9580\u5e02\u5834",
+                    "En": "Dong  Men Market"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 3,
+                "StopPosition": {
+                    "PositionLon": 120.9695,
+                    "PositionLat": 24.80524,
+                    "GeoHash": "wsqj0exkc"
+                },
+                "StationID": "130108",
+                "StationGroupID": "300\uff0d157",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296970",
+                "StopID": "296970",
+                "StopName": {
+                    "Zh_tw": "\u706b\u8eca\u7ad9",
+                    "En": "Train Station"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 4,
+                "StopPosition": {
+                    "PositionLon": 120.9711,
+                    "PositionLat": 24.80332,
+                    "GeoHash": "wsqj0g23y"
+                },
+                "StationID": "130109",
+                "StationGroupID": "300\uff0d156",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296972",
+                "StopID": "296972",
+                "StopName": {
+                    "Zh_tw": "\u6771\u5340\u5340\u516c\u6240",
+                    "En": "East  District  Office"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 5,
+                "StopPosition": {
+                    "PositionLon": 120.9732,
+                    "PositionLat": 24.80529,
+                    "GeoHash": "wsqj0g9vr"
+                },
+                "StationID": "131824",
+                "StationGroupID": "300\uff0d533",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296975",
+                "StopID": "296975",
+                "StopName": {
+                    "Zh_tw": "\u516c\u5712",
+                    "En": "Park"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 6,
+                "StopPosition": {
+                    "PositionLon": 120.97866,
+                    "PositionLat": 24.802238,
+                    "GeoHash": "wsqj0gjgx"
+                },
+                "StationID": "130246",
+                "StationGroupID": "300\uff0d239",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296977",
+                "StopID": "296977",
+                "StopName": {
+                    "Zh_tw": "\u4e8c\u5206\u5c40",
+                    "En": "Second Police Bureau"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 7,
+                "StopPosition": {
+                    "PositionLon": 120.9859,
+                    "PositionLat": 24.80127,
+                    "GeoHash": "wsqj14gjz"
+                },
+                "StationID": "133843",
+                "StationGroupID": "300\uff0d593",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296979",
+                "StopID": "296979",
+                "StopName": {
+                    "Zh_tw": "\u5de5\u7814\u9662\u5149\u5fa9\u9662\u5340",
+                    "En": "ITRI Kuang fu Compound"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 8,
+                "StopPosition": {
+                    "PositionLon": 120.98745,
+                    "PositionLat": 24.80026,
+                    "GeoHash": "wsqj14srg"
+                },
+                "StationID": "130205",
+                "StationGroupID": "300\uff0d246",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ291848",
+                "StopID": "291848",
+                "StopName": {
+                    "Zh_tw": "\u99ac\u5055\u91ab\u9662",
+                    "En": "Mackay Memorial Hospital, HsinChu"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 9,
+                "StopPosition": {
+                    "PositionLon": 120.990374,
+                    "PositionLat": 24.799784,
+                    "GeoHash": "wsqj14wt0"
+                },
+                "StationID": "130206",
+                "StationGroupID": "300\uff0d247",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296982",
+                "StopID": "296982",
+                "StopName": {
+                    "Zh_tw": "\u6d77\u8ecd\u65b0\u6751",
+                    "En": "Hai Jun Xin Village"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 10,
+                "StopPosition": {
+                    "PositionLon": 120.992243,
+                    "PositionLat": 24.79924,
+                    "GeoHash": "wsqj14xf5"
+                },
+                "StationID": "130207",
+                "StationGroupID": "300\uff0d248",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296983",
+                "StopID": "296983",
+                "StopName": {
+                    "Zh_tw": "\u5149\u5fa9\u4e2d\u5b78",
+                    "En": "Hsinchu Kuang-Fu Senior High School"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 11,
+                "StopPosition": {
+                    "PositionLon": 120.99456,
+                    "PositionLat": 24.79816,
+                    "GeoHash": "wsqj163ec"
+                },
+                "StationID": "130208",
+                "StationGroupID": "300\uff0d249",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296985",
+                "StopID": "296985",
+                "StopName": {
+                    "Zh_tw": "\u6e05\u83ef\u5927\u5b78",
+                    "En": "National Tsing Hua University"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 12,
+                "StopPosition": {
+                    "PositionLon": 120.99744,
+                    "PositionLat": 24.79625,
+                    "GeoHash": "wsqj1658s"
+                },
+                "StationID": "130209",
+                "StationGroupID": "300\uff0d250",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296987",
+                "StopID": "296987",
+                "StopName": {
+                    "Zh_tw": "\u91d1\u57ce\u65b0\u6751\u53e3",
+                    "En": "Jin Cheng Xin Village Kou"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 13,
+                "StopPosition": {
+                    "PositionLon": 121.00045,
+                    "PositionLat": 24.79382,
+                    "GeoHash": "wsqj13tf6"
+                },
+                "StationID": "130210",
+                "StationGroupID": "300\uff0d251",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296989",
+                "StopID": "296989",
+                "StopName": {
+                    "Zh_tw": "\u904e\u6e9d",
+                    "En": "Guo Gou"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 14,
+                "StopPosition": {
+                    "PositionLon": 121.00324,
+                    "PositionLat": 24.79176,
+                    "GeoHash": "wsqj13py7"
+                },
+                "StationID": "130211",
+                "StationGroupID": "300\uff0d252",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296991",
+                "StopID": "296991",
+                "StopName": {
+                    "Zh_tw": "\u79d1\u5b78\u5712\u5340",
+                    "En": "Hsinchu Science Park"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 15,
+                "StopPosition": {
+                    "PositionLon": 121.00837,
+                    "PositionLat": 24.78819,
+                    "GeoHash": "wsqj18e9e"
+                },
+                "StationID": "130212",
+                "StationGroupID": "300\uff0d253",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ299891",
+                "StopID": "299891",
+                "StopName": {
+                    "Zh_tw": "\u9f8d\u5c71\u91cc",
+                    "En": "Longshan Village"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 16,
+                "StopPosition": {
+                    "PositionLon": 121.011831,
+                    "PositionLat": 24.789028,
+                    "GeoHash": "wsqj18wns"
+                },
+                "StationID": "136095",
+                "StationGroupID": "300\uff0d625",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296997",
+                "StopID": "296997",
+                "StopName": {
+                    "Zh_tw": "\u6148\u96f2\u57d4\u9802\u4e8c\u8def\u53e3",
+                    "En": "Ciyun Puding 2nd Rd. Entrance"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 17,
+                "StopPosition": {
+                    "PositionLon": 121.0121,
+                    "PositionLat": 24.7909,
+                    "GeoHash": "wsqj19n36"
+                },
+                "StationID": "133848",
+                "StationGroupID": "300\uff0d592",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ297000",
+                "StopID": "297000",
+                "StopName": {
+                    "Zh_tw": "\u597d\u5e02\u591a",
+                    "En": "Costco"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 18,
+                "StopPosition": {
+                    "PositionLon": 121.01266,
+                    "PositionLat": 24.79254,
+                    "GeoHash": "wsqj19qep"
+                },
+                "StationID": "130842",
+                "StationGroupID": "300\uff0d495",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ297003",
+                "StopID": "297003",
+                "StopName": {
+                    "Zh_tw": "\u6587\u8208\u5609\u8208\u8def\u53e3",
+                    "En": "Wenxing Jiaxing Rd. Entrance"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 19,
+                "StopPosition": {
+                    "PositionLon": 121.02379,
+                    "PositionLat": 24.81279,
+                    "GeoHash": "wsqj1vnbf"
+                },
+                "StationID": "130857",
+                "StationGroupID": "302\uff0d129",
+                "LocationCityCode": "HSQ"
+            },
+            {
+                "StopUID": "HSZ297007",
+                "StopID": "297007",
+                "StopName": {
+                    "Zh_tw": "\u65b0\u74e6\u5c4b(\u6587\u8208\u8def)",
+                    "En": "New Tile House Hakka Cultural Distric (Wenxing Rd.)"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 20,
+                "StopPosition": {
+                    "PositionLon": 121.02693,
+                    "PositionLat": 24.81115,
+                    "GeoHash": "wsqj4h9p7"
+                },
+                "StationID": "133851",
+                "StationGroupID": "302\uff0d215",
+                "LocationCityCode": "HSQ"
+            },
+            {
+                "StopUID": "HSZ297014",
+                "StopID": "297014",
+                "StopName": {
+                    "Zh_tw": "\u6587\u8208\u5609\u8c50\u5357\u8def\u53e3",
+                    "En": "Wenxing Jiafeng S. Rd. Entrance"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 21,
+                "StopPosition": {
+                    "PositionLon": 121.03186,
+                    "PositionLat": 24.80876,
+                    "GeoHash": "wsqj4hk9w"
+                },
+                "StationID": "133856",
+                "StationGroupID": "302\uff0d214",
+                "LocationCityCode": "HSQ"
+            },
+            {
+                "StopUID": "HSZ297010",
+                "StopID": "297010",
+                "StopName": {
+                    "Zh_tw": "\u54c8\u6d1b\u5fb7(\u5609\u8c50\u5341\u4e00\u8def)",
+                    "En": "Harrods (Jiafeng 11th Rd.)"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 22,
+                "StopPosition": {
+                    "PositionLon": 121.035722,
+                    "PositionLat": 24.808466,
+                    "GeoHash": "wsqj4hpxb"
+                },
+                "StationID": "133853",
+                "StationGroupID": "302\uff0d216",
+                "LocationCityCode": "HSQ"
+            },
+            {
+                "StopUID": "HSZ297013",
+                "StopID": "297013",
+                "StopName": {
+                    "Zh_tw": "\u9ad8\u9435\u65b0\u7af9\u7ad9",
+                    "En": "THSR Hsinchu Station"
+                },
+                "StopBoarding": -1,
+                "StopSequence": 23,
+                "StopPosition": {
+                    "PositionLon": 121.0405,
+                    "PositionLat": 24.80818,
+                    "GeoHash": "wsqj4k5n0"
+                },
+                "StationID": "130969",
+                "StationGroupID": "302\uff0d131",
+                "LocationCityCode": "HSQ"
+            }
+        ],
+        "UpdateTime": "2023-06-14T06:33:29+08:00",
+        "VersionID": 1721
+    },
+    {
+        "RouteUID": "HSZ0182",
+        "RouteID": "0182",
+        "RouteName": {
+            "Zh_tw": "182",
+            "En": "182"
+        },
+        "Operators": [
+            {
+                "OperatorID": "45",
+                "OperatorName": {
+                    "Zh_tw": "\u570b\u5149\u5ba2\u904b",
+                    "En": "Kuo-Kuang Bus Co., Ltd."
+                },
+                "OperatorCode": "KuoKuangBus",
+                "OperatorNo": "1101"
+            }
+        ],
+        "SubRouteUID": "HSZ018202",
+        "SubRouteID": "018202",
+        "SubRouteName": {
+            "Zh_tw": "182",
+            "En": "182"
+        },
+        "Direction": 1,
+        "City": "Hsinchu",
+        "CityCode": "HSZ",
+        "Stops": [
+            {
+                "StopUID": "HSZ297013",
+                "StopID": "297013",
+                "StopName": {
+                    "Zh_tw": "\u9ad8\u9435\u65b0\u7af9\u7ad9",
+                    "En": "THSR Hsinchu Station"
+                },
+                "StopBoarding": 1,
+                "StopSequence": 1,
+                "StopPosition": {
+                    "PositionLon": 121.0405,
+                    "PositionLat": 24.80818,
+                    "GeoHash": "wsqj4k5n0"
+                },
+                "StationID": "130969",
+                "StationGroupID": "302\uff0d131",
+                "LocationCityCode": "HSQ"
+            },
+            {
+                "StopUID": "HSZ297011",
+                "StopID": "297011",
+                "StopName": {
+                    "Zh_tw": "\u54c8\u6d1b\u5fb7(\u6587\u8208\u8def)",
+                    "En": "Harrods (Wenxing Rd.)"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 2,
+                "StopPosition": {
+                    "PositionLon": 121.03477,
+                    "PositionLat": 24.8078,
+                    "GeoHash": "wsqj4hngf"
+                },
+                "StationID": "133854",
+                "StationGroupID": "302\uff0d216",
+                "LocationCityCode": "HSQ"
+            },
+            {
+                "StopUID": "HSZ297015",
+                "StopID": "297015",
+                "StopName": {
+                    "Zh_tw": "\u6587\u8208\u5609\u8c50\u5357\u8def\u53e3",
+                    "En": "Wenxing Jiafeng S. Rd. Entrance"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 3,
+                "StopPosition": {
+                    "PositionLon": 121.032142,
+                    "PositionLat": 24.808771,
+                    "GeoHash": "wsqj4hkct"
+                },
+                "StationID": "133857",
+                "StationGroupID": "302\uff0d214",
+                "LocationCityCode": "HSQ"
+            },
+            {
+                "StopUID": "HSZ297008",
+                "StopID": "297008",
+                "StopName": {
+                    "Zh_tw": "\u65b0\u74e6\u5c4b(\u6587\u8208\u8def)",
+                    "En": "New Tile House Hakka Cultural Distric (Wenxing Rd.)"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 4,
+                "StopPosition": {
+                    "PositionLon": 121.02694,
+                    "PositionLat": 24.8114,
+                    "GeoHash": "wsqj4hc0u"
+                },
+                "StationID": "133852",
+                "StationGroupID": "302\uff0d215",
+                "LocationCityCode": "HSQ"
+            },
+            {
+                "StopUID": "HSZ297004",
+                "StopID": "297004",
+                "StopName": {
+                    "Zh_tw": "\u6587\u8208\u5609\u8208\u8def\u53e3",
+                    "En": "Wenxing Jiaxing Rd. Entrance"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 5,
+                "StopPosition": {
+                    "PositionLon": 121.02487,
+                    "PositionLat": 24.812466,
+                    "GeoHash": "wsqj1uzx5"
+                },
+                "StationID": "130856",
+                "StationGroupID": "302\uff0d129",
+                "LocationCityCode": "HSQ"
+            },
+            {
+                "StopUID": "HSZ297001",
+                "StopID": "297001",
+                "StopName": {
+                    "Zh_tw": "\u597d\u5e02\u591a",
+                    "En": "Costco"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 6,
+                "StopPosition": {
+                    "PositionLon": 121.01262,
+                    "PositionLat": 24.79351,
+                    "GeoHash": "wsqj19w8w"
+                },
+                "StationID": "130841",
+                "StationGroupID": "300\uff0d495",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296998",
+                "StopID": "296998",
+                "StopName": {
+                    "Zh_tw": "\u6148\u96f2\u57d4\u9802\u4e8c\u8def\u53e3",
+                    "En": "Ciyun Puding 2nd Rd. Entrance"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 7,
+                "StopPosition": {
+                    "PositionLon": 121.01186,
+                    "PositionLat": 24.79111,
+                    "GeoHash": "wsqj19n4s"
+                },
+                "StationID": "133849",
+                "StationGroupID": "300\uff0d592",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296992",
+                "StopID": "296992",
+                "StopName": {
+                    "Zh_tw": "\u79d1\u5b78\u5712\u5340",
+                    "En": "Hsinchu Science Park"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 8,
+                "StopPosition": {
+                    "PositionLon": 121.00801,
+                    "PositionLat": 24.78885,
+                    "GeoHash": "wsqj18eme"
+                },
+                "StationID": "130232",
+                "StationGroupID": "300\uff0d253",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296990",
+                "StopID": "296990",
+                "StopName": {
+                    "Zh_tw": "\u904e\u6e9d",
+                    "En": "Guo Gou"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 9,
+                "StopPosition": {
+                    "PositionLon": 121.00263,
+                    "PositionLat": 24.79256,
+                    "GeoHash": "wsqj13r7j"
+                },
+                "StationID": "130233",
+                "StationGroupID": "300\uff0d252",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296988",
+                "StopID": "296988",
+                "StopName": {
+                    "Zh_tw": "\u91d1\u57ce\u65b0\u6751\u53e3",
+                    "En": "Jin Cheng Xin Village Kou"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 10,
+                "StopPosition": {
+                    "PositionLon": 121.00094,
+                    "PositionLat": 24.79372,
+                    "GeoHash": "wsqj13w1y"
+                },
+                "StationID": "130234",
+                "StationGroupID": "300\uff0d251",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296999",
+                "StopID": "296999",
+                "StopName": {
+                    "Zh_tw": "\u6587\u6559\u65b0\u6751",
+                    "En": "Wen Jiao Xin Village"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 11,
+                "StopPosition": {
+                    "PositionLon": 120.99878,
+                    "PositionLat": 24.79542,
+                    "GeoHash": "wsqj13ueg"
+                },
+                "StationID": "133850",
+                "StationGroupID": "300\uff0d262",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296986",
+                "StopID": "296986",
+                "StopName": {
+                    "Zh_tw": "\u6e05\u83ef\u5927\u5b78",
+                    "En": "National Tsing Hua University"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 12,
+                "StopPosition": {
+                    "PositionLon": 120.99754,
+                    "PositionLat": 24.79651,
+                    "GeoHash": "wsqj165dp"
+                },
+                "StationID": "130236",
+                "StationGroupID": "300\uff0d250",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296984",
+                "StopID": "296984",
+                "StopName": {
+                    "Zh_tw": "\u5149\u5fa9\u4e2d\u5b78",
+                    "En": "Hsinchu Kuang-Fu Senior High School"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 13,
+                "StopPosition": {
+                    "PositionLon": 120.99481,
+                    "PositionLat": 24.79833,
+                    "GeoHash": "wsqj163sx"
+                },
+                "StationID": "130237",
+                "StationGroupID": "300\uff0d249",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296981",
+                "StopID": "296981",
+                "StopName": {
+                    "Zh_tw": "\u99ac\u5055\u91ab\u9662",
+                    "En": "Mackay Memorial Hospital, HsinChu"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 14,
+                "StopPosition": {
+                    "PositionLon": 120.99183,
+                    "PositionLat": 24.79962,
+                    "GeoHash": "wsqj14xs3"
+                },
+                "StationID": "130238",
+                "StationGroupID": "300\uff0d247",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296980",
+                "StopID": "296980",
+                "StopName": {
+                    "Zh_tw": "\u5de5\u7814\u9662\u5149\u5fa9\u9662\u5340",
+                    "En": "ITRI Kuang fu Compound"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 15,
+                "StopPosition": {
+                    "PositionLon": 120.98866,
+                    "PositionLat": 24.80069,
+                    "GeoHash": "wsqj14v62"
+                },
+                "StationID": "130239",
+                "StationGroupID": "300\uff0d246",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296978",
+                "StopID": "296978",
+                "StopName": {
+                    "Zh_tw": "\u4e8c\u5206\u5c40",
+                    "En": "Second Police Bureau"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 16,
+                "StopPosition": {
+                    "PositionLon": 120.98553,
+                    "PositionLat": 24.80171,
+                    "GeoHash": "wsqj154br"
+                },
+                "StationID": "133052",
+                "StationGroupID": "300\uff0d593",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296974",
+                "StopID": "296974",
+                "StopName": {
+                    "Zh_tw": "\u6771\u5340\u5340\u516c\u6240",
+                    "En": "East  District  Office"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 17,
+                "StopPosition": {
+                    "PositionLon": 120.97301,
+                    "PositionLat": 24.80531,
+                    "GeoHash": "wsqj0g9v7"
+                },
+                "StationID": "131833",
+                "StationGroupID": "300\uff0d533",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296971",
+                "StopID": "296971",
+                "StopName": {
+                    "Zh_tw": "\u706b\u8eca\u7ad9",
+                    "En": "Train Station"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 18,
+                "StopPosition": {
+                    "PositionLon": 120.97124,
+                    "PositionLat": 24.80324,
+                    "GeoHash": "wsqj0g296"
+                },
+                "StationID": "130081",
+                "StationGroupID": "300\uff0d156",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296969",
+                "StopID": "296969",
+                "StopName": {
+                    "Zh_tw": "\u6771\u9580\u5e02\u5834",
+                    "En": "Dong  Men Market"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 19,
+                "StopPosition": {
+                    "PositionLon": 120.96976,
+                    "PositionLat": 24.80528,
+                    "GeoHash": "wsqj0exmp"
+                },
+                "StationID": "130082",
+                "StationGroupID": "300\uff0d157",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ292080",
+                "StopID": "292080",
+                "StopName": {
+                    "Zh_tw": "\u5730\u65b9\u6cd5\u9662",
+                    "En": "District Court"
+                },
+                "StopBoarding": 0,
+                "StopSequence": 20,
+                "StopPosition": {
+                    "PositionLon": 120.96799,
+                    "PositionLat": 24.80753,
+                    "GeoHash": "wsqj0sn4q"
+                },
+                "StationID": "130309",
+                "StationGroupID": "300\uff0d273",
+                "LocationCityCode": "HSZ"
+            },
+            {
+                "StopUID": "HSZ296966",
+                "StopID": "296966",
+                "StopName": {
+                    "Zh_tw": "\u5317\u5927\u6a4b",
+                    "En": "Bei-Da Bridge"
+                },
+                "StopBoarding": -1,
+                "StopSequence": 21,
+                "StopPosition": {
+                    "PositionLon": 120.96848,
+                    "PositionLat": 24.80984,
+                    "GeoHash": "wsqj0sqxc"
+                },
+                "StationID": "133840",
+                "StationGroupID": "300\uff0d275",
+                "LocationCityCode": "HSZ"
+            }
+        ],
+        "UpdateTime": "2023-06-14T06:33:29+08:00",
+        "VersionID": 1721
+    }
+]
