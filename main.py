@@ -93,5 +93,5 @@ def GetRouteArrival(route_name, direction):
 if __name__ == '__main__':
     route_name = '182'
     result = GetRouteArrival(route_name, 0)
-    print(json.dumps(result, ensure_ascii=False))
+    #print(json.dumps(result, ensure_ascii=False))
     #GetRouteDetail(route_name)
