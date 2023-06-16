@@ -58,7 +58,7 @@ def GetRouteDetail(route_name):
     result = SendRequest(request_url)
 
     with open('routes_detail.json', 'w') as f:
-        f.write(json.dumps(result))
+        f.write(json.dumps(result, ensure_ascii=False))
 
 def GetRouteArrival(route_name, direction):
     city = 'Hsinchu'
@@ -92,6 +92,6 @@ def GetRouteArrival(route_name, direction):
 
 if __name__ == '__main__':
     route_name = '182'
-    result = GetRouteArrival(route_name, 0)
+    #result = GetRouteArrival(route_name, 0)
     #print(json.dumps(result, ensure_ascii=False))
     #GetRouteDetail(route_name)
