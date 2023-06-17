@@ -10,6 +10,8 @@ app_key = 'b222cb12-0d88-478c-9f47-5c47d120f53b'
 auth_url="https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token"
 base_url = "https://tdx.transportdata.tw/api/basic/v2/Bus/{}"
 
+schedule = json.loads(open('Schedule.json', 'r', encoding="utf-8").read())
+
 class Auth():
 
     def __init__(self, app_id, app_key):
@@ -65,7 +67,6 @@ def GetBusScheduleNow(bus_name, direction):
 
     current = datetime.strptime('{}:{}'.format(datetime.now().hour, datetime.now().minute) ,'%H:%M')
     name = '{}_{}'.format(bus_name, direction)
-    schedule = json.loads(open('Schedule.json', 'r', encoding="utf-8").read())
     if(name not in schedule):
         return []
     
@@ -173,38 +174,6 @@ def GetWalkingTime(start_lat, start_lon, end_lat, end_lon):
         return int(result['rows'][0]['elements'][0]['duration']['text'].split(' ')[0]) * 60
     except:
         return -1
-
-
-def GetRouteArrival(route_name, direction):
-    city = 'Hsinchu'
-    args = '?format=JSON'
-    api_type = 'EstimatedTimeOfArrival/Streaming/City/{}/{}{}'.format(city, route_name, args)
-    request_url = base_url.format(api_type)
-
-    request_result = SendRequest(request_url)
-    current_time = datetime.now()
-    return_result = json.loads("[]")
-    element_template = json.loads('{"name": "", "arrivalTime": -1}')
-
-    with open('temp.json', 'w') as f:
-        f.write(json.dumps(request_result, ensure_ascii=False))
-
-    for index in range(len(request_result)):
-        if(request_result[index]['PlateNumb'] == '-1' or
-           request_result[index]['Direction'] != direction or
-           'EstimateTime' not in request_result[index]):
-           continue
-
-        src_trans_time = datetime.fromisoformat(request_result[index]['SrcTransTime']).replace(tzinfo=None)
-        trans_time_delta = int((current_time - src_trans_time).total_seconds())
-        estimate_time = int((int(request_result[index]['EstimateTime']) - trans_time_delta) / 60)
-
-        template = copy.deepcopy(element_template)
-        template['name'] = request_result[index]['StopName']['Zh_tw']
-        template['arrivalTime'] = estimate_time
-        return_result.append(template)
-
-    return return_result
 
 if __name__ == '__main__':
     bus_name = '藍線1區'
