@@ -1,5 +1,4 @@
 import requests
-from pprint import pprint
 import json
 import copy, time
 from datetime import datetime
