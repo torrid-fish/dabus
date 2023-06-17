@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from routing import routing
 from utility import GetTime
 import json
@@ -14,10 +14,10 @@ def search():
     except:
         return "API overflow:(" # Retry design is required
 
-    return jsonify({
+    return json.dumps({
         "status": "ok",
         "data": data
-    })    
+    }, ensure_ascii=False)    
 
 @app.route('/notification', methods=['GET'])
 def notification():
@@ -32,10 +32,10 @@ def notification():
     except:
         time = -1
     
-    return jsonify({
+    return json.dumps({
         "status": "ok",
         "time": time
-    })
+    }, ensure_ascii=False)
 
 if __name__ == '__main__':
     app.run(port='5000', debug=True)
