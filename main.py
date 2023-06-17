@@ -81,16 +81,16 @@ def GetBusScheduleNow(bus_name, direction):
         return trip['StopTimes']
     return []
 
-def GetBusArrivalTime(bus_name, bus_type, direction, stop_name):
+def GetBusArrivalTime(bus_name, bus_type, direction, stop_sequence):
     """
     Get arrival time of specific bus's specific stop
 
-    bus_name   -- (str) Name of the bus (SubRouteName)
-    bus_type   -- (int) City / County / InterCity Bus (0 / 1 / 2)
-    direction  -- (int) Direction of the bus (0:'去程',1:'返程',2:'迴圈',255:'未知')
-    stop_name  -- (str) Name of query stop
+    bus_name       -- (str) Name of the bus (SubRouteName)
+    bus_type       -- (int) City / County / InterCity Bus (0 / 1 / 2)
+    direction      -- (int) Direction of the bus (0:'去程',1:'返程',2:'迴圈',255:'未知')
+    stop_sequence  -- (int) Sequence number of the stop
 
-    return an integer represent remaining minutes
+    return an integer represent remaining seconds
     if the last bus has been gone or there's no bus today, return -1
     if the stop is temporary closed, return -2
     """
@@ -111,11 +111,10 @@ def GetBusArrivalTime(bus_name, bus_type, direction, stop_name):
     else:
         request_url = 'https://tdx.transportdata.tw/api/basic/v2/Bus/EstimatedTimeOfArrival/Streaming/InterCity/{}'.format(bus_name)
         result = SendRequest(request_url)
-    
-    print(json.dumps(result, ensure_ascii=False))
+
     # Check instant status
     for stop in result:
-        if(stop['SubRouteName']['Zh_tw'] != bus_name or stop['Direction'] != direction or stop['StopName']['Zh_tw'] != stop_name):
+        if(stop['SubRouteName']['Zh_tw'] != bus_name or stop['Direction'] != direction or stop['StopSequence'] != stop_sequence):
             continue
         else:
             if(stop['StopStatus'] == 3 or stop['StopStatus'] == 4):
@@ -126,7 +125,7 @@ def GetBusArrivalTime(bus_name, bus_type, direction, stop_name):
                 continue
             src_trans_time = datetime.fromisoformat(stop['SrcTransTime']).replace(tzinfo=None)
             trans_time_delta = int((current_time - src_trans_time).total_seconds())
-            estimate_time = int((int(stop['EstimateTime']) - trans_time_delta) / 60)
+            estimate_time = int((int(stop['EstimateTime']) - trans_time_delta))
             if(estimate_time < 0):
                 estimate_time = 0
             return estimate_time
@@ -136,12 +135,12 @@ def GetBusArrivalTime(bus_name, bus_type, direction, stop_name):
     if(time_table == []):
         return -1
     for stop in time_table:
-        if stop['StopName'] != stop_name:
+        if stop['StopSequence'] != stop_sequence:
             continue
         else:
             current_time = datetime.strptime('{}:{}'.format(datetime.now().hour, datetime.now().minute) ,'%H:%M')
             arrival_time = datetime.strptime(stop['ArrivalTime'], '%H:%M')
-            delta = int((arrival_time - current_time).total_seconds() / 60)
+            delta = int((arrival_time - current_time).total_seconds())
             return delta
     
     return -1
@@ -179,6 +178,6 @@ def GetRouteArrival(route_name, direction):
     return return_result
 
 if __name__ == '__main__':
-    bus_name = '182'
-    print(GetBusArrivalTime(bus_name, 0, 1, '清華大學'))
-    print(json.dumps(GetRouteArrival(bus_name, 0), ensure_ascii=False))
+    bus_name = '藍線1區'
+    # bus_name, bus_type, direction, stop_sequence
+    print(int(GetBusArrivalTime(bus_name, 0, 0, 16) / 60))
