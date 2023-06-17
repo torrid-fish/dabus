@@ -54,7 +54,7 @@ def score(distance_from, distance_to, travel_time, waiting_time):
     """
     Score the route based on given parameters.
     """
-    a, b, c, d = 1, 2, 3, 4
+    a, b, c, d = 40, 10, 1, 4
     return a * distance_from + b * distance_to + c * travel_time + d * waiting_time
 
 def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
@@ -110,7 +110,11 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
             
             distance_from = distance(from_lat, from_lon, from_stop["Lat"], from_stop["Lon"])
             distance_to = distance(to_lat, to_lon, to_stop["Lat"], to_stop["Lon"])
-            travel_time  = to_time - from_time
+            if from_time > to_time:
+                travel_time = from_time - to_time
+            else:
+                travel_time = from_time + to_time
+
             wait_time = from_time
 
             possible_routes.append({
@@ -136,6 +140,6 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
     return sorted_routes
 
 
-result = routing(24.780765, 120.989119, 24.817373, 120.996565)
+result = routing(24.801818, 120.971263, 24.798355, 120.994509)
 for i in range(len(result)):
     print(result[i])
