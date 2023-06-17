@@ -1,6 +1,6 @@
 import json
 from math import radians, cos, sin, asin, sqrt
-from main import GetBusArrivalTime
+from main import GetBusArrivalTime, GetWalkingTime
 
 with open("./StopList.json", "r", encoding="utf-8") as f:
     StopList = json.loads(f.read())
@@ -58,12 +58,12 @@ def find_near_stops(lat: float, lon: float, threshold: float):
     # Return the acceptable stops
     return _StopList[:threshold_idx]
 
-def score(distance_from, distance_to, travel_time, waiting_time):
+def score(from_walk_time, to_walk_time, travel_time, waiting_time):
     """
     Score the route based on given parameters.
     """
-    a, b, c, d = 40, 10, 0, 4
-    return a * distance_from + b * distance_to + c * travel_time + d * waiting_time
+    a, b, c, d = 1, 1, 1, 1
+    return a * from_walk_time + b * to_walk_time + c * travel_time + d * waiting_time
 
 def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
     """
@@ -131,6 +131,9 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
 
             wait_time = from_time
 
+            from_walk_time = GetWalkingTime(from_lat, from_lon, from_stop["Lat"], from_stop["Lon"])
+            to_walk_time = GetWalkingTime(to_lat, to_lon, to_stop["Lat"], to_stop["Lon"])
+
             possible_routes.append({
                 "RouteName": to_stop["RouteName"], 
                 "BusType": to_stop["BusType"],
@@ -140,7 +143,9 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
                 "ToStopName": to_stop["StopName"], 
                 "ToStopSequence": to_stop["StopSequence"],
                 "DistanceFrom": distance_from, 
+                "FromStopWalkTime": from_walk_time,
                 "DistanceTo": distance_to, 
+                "ToStopWalkTime": to_walk_time,
                 "TravelTime": travel_time, 
                 "WaitTime": wait_time
             })
@@ -148,7 +153,7 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
     print(f"There are {len(possible_routes)} possible routes currently.")
 
     # Sorting all possible routes
-    sorted_routes = sorted(possible_routes, key= lambda route: score(route["DistanceFrom"], route["DistanceTo"], route["TravelTime"], route["WaitTime"]))
+    sorted_routes = sorted(possible_routes, key= lambda route: score(route["FromStopWalkTime"], route["ToStopWalkTime"], route["TravelTime"], route["WaitTime"]))
 
     # Return the optimize result
     return sorted_routes
