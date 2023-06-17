@@ -42,6 +42,7 @@ class data():
             'authorization': 'Bearer '+access_token
         }
 
+# Send request to Bus API server with specific request_url
 def SendRequest(request_url):
     auth = Auth(app_id, app_key)
     auth_response = requests.post(auth_url, auth.get_auth_header())
@@ -49,8 +50,9 @@ def SendRequest(request_url):
     data_response = requests.get(request_url, headers=d.get_data_header())
     return json.loads(data_response.text)
 
+# 用於取得 StopList，之後不會用到
 def GetInterCityStopList():
-    f = json.loads(open('tempo.json', 'r').read())
+    f = json.loads(open('All.json', 'r').read())
     AllStops = json.loads('[]')
     routes = json.loads(open('RoutesListFiles/RouteNames.json', 'r').read())[2]['routes']
 
@@ -70,9 +72,8 @@ def GetInterCityStopList():
             AllStops.append(copy.deepcopy(stop))
         with open('InterCityStopList.json', 'w') as f:
             f.write(json.dumps(AllStops, ensure_ascii=False))
-        time.sleep(2)
 
-
+# 用於取得 StopList，之後不會用到
 def GetStopList():
     city = 'HsinchuCounty'
     args = '?format=JSON'
@@ -105,9 +106,68 @@ def GetStopList():
         with open('CountyStopList.json', 'w') as f:
             f.write(json.dumps(AllStops, ensure_ascii=False))
         time.sleep(2)
-        
-    # with open('CityStopList.json', 'w') as f:
-    #     f.write(json.dumps(AllStops, ensure_ascii=False))
+
+# 用於取得 RouteStops，之後不會用到
+def GetRouteStops():
+    city = 'HsinchuCounty'
+    args = '?format=JSON'
+    routes = json.loads(open('RoutesListFiles/RouteNames.json', 'r').read())
+
+    # Store All data in dict format
+    AllStops = json.loads('{}')
+
+    for route_name in routes[1]['routes']:
+        print(route_name)
+        api_type = 'StopOfRoute/City/{}/{}{}'.format(city, route_name, args)
+        request_url = base_url.format(api_type)
+        result = SendRequest(request_url)
+
+        for i in result:
+            name = '{}_{}'.format(i['SubRouteName']['Zh_tw'], i['Direction'])
+            AllStops[name] = []
+            print('\t{}'.format(name))
+            for k in i['Stops']:
+                stop = json.loads('{}')
+                j = copy.deepcopy(k)
+                stop['StopName'] = j['StopName']['Zh_tw']
+                stop['Lon'] = j['StopPosition']['PositionLon']
+                stop['Lat'] = j['StopPosition']['PositionLat']
+                #stop['BusType'] = 1
+                #stop['RouteName'] = i['SubRouteName']['Zh_tw']
+                #stop['Direction'] = i['Direction']
+                stop['StopSequence'] = j['StopSequence']
+                AllStops[name].append(copy.deepcopy(stop))
+            
+        #print(json.dumps(result, ensure_ascii=False))
+        with open('CountyRouteStop.json', 'w') as f:
+            f.write(json.dumps(AllStops, ensure_ascii=False))
+        time.sleep(3)
+
+# 用於取得 RouteStops，之後不會用到
+def GetInterCityRouteStops():
+    f = json.loads(open('All.json', 'r').read())
+    AllStops = json.loads('{}')
+    routes = json.loads(open('RoutesListFiles/RouteNames.json', 'r').read())[2]['routes']
+
+    for route in f:
+        if(route['SubRouteName']['Zh_tw'] not in routes):
+            continue
+        name = '{}_{}'.format(route['SubRouteName']['Zh_tw'], route['Direction'])
+        print(name)
+        AllStops[name] = []
+        for i in route['Stops']:
+            stop = json.loads('{}')
+            j = copy.deepcopy(i)
+            stop['StopName'] = j['StopName']['Zh_tw']
+            stop['Lon'] = j['StopPosition']['PositionLon']
+            stop['Lat'] = j['StopPosition']['PositionLat']
+            #stop['BusType'] = 2
+            #stop['RouteName'] = route['SubRouteName']['Zh_tw']
+            #stop['Direction'] = route['Direction']
+            stop['StopSequence'] = j['StopSequence']
+            AllStops[name].append(copy.deepcopy(stop))
+        with open('InterCityRouteStop.json', 'w') as f:
+            f.write(json.dumps(AllStops, ensure_ascii=False))
 
 def GetStationsDetail():
     city = 'HsinchuCounty'
@@ -130,6 +190,7 @@ def GetRouteDetail(route_name):
 
     with open('routes_detail.json', 'w') as f:
         f.write(json.dumps(result, ensure_ascii=False))
+
 
 def GetRouteArrival(route_name, direction):
     city = 'Hsinchu'
@@ -163,8 +224,6 @@ def GetRouteArrival(route_name, direction):
 
 if __name__ == '__main__':
     route_name = '182'
-    GetInterCityStopList()
-    #GetStopList()
     #result = GetRouteArrival(route_name, 0)
     #print(json.dumps(result, ensure_ascii=False))
     #GetRouteDetail(route_name)
