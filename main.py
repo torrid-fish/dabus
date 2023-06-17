@@ -37,7 +37,6 @@ class data():
     def get_data_header(self):
         auth_JSON = json.loads(self.auth_response.text)
         access_token = auth_JSON.get('access_token')
-        print(self.auth_response.text)
         return{
             'authorization': 'Bearer '+access_token
         }
