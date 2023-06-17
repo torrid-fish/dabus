@@ -125,3 +125,4 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
 
 
 result = routing(24.780765, 120.989119, 24.817373, 120.996565)
+print(result)
