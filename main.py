@@ -42,13 +42,46 @@ class data():
             'authorization': 'Bearer '+access_token
         }
 
-# Send request to Bus API server with specific request_url
 def SendRequest(request_url):
+    """
+    Send request to Bus API server with specific request_url
+    request_url -- (str) The request link
+
+    return a json object of return result
+    """
     auth = Auth(app_id, app_key)
     auth_response = requests.post(auth_url, auth.get_auth_header())
     d = data(app_id, app_key, auth_response)
     data_response = requests.get(request_url, headers=d.get_data_header())
     return json.loads(data_response.text)
+
+def GetBusScheduleNow(route_name, direction):
+    """
+    Get specific bus's schedule according current time
+    route_name -- (str) The bus's name(SubrouteName)
+    direction  -- (int) The direction of the bus (0:'去程',1:'返程',2:'迴圈',255:'未知')
+    
+    return a list of timetable
+    """
+
+    current = datetime.strptime('{}:{}'.format(datetime.now().hour, datetime.now().minute) ,'%H:%M')
+    name = '{}_{}'.format(route_name, direction)
+    schedule = json.loads(open('Schedule.json', 'r', encoding="utf-8").read())
+    if(name not in schedule):
+        return []
+    
+    for trip in schedule[name]:
+        weekday = (datetime.today().weekday() + 1) % 7
+        if(trip['ServiceDay'][weekday] == 0):
+            continue
+        start = datetime.strptime(trip['StopTimes'][0]['ArrivalTime'], '%H:%M')
+        delta = (start - current).total_seconds()
+        if(delta < 0):
+            continue
+        return json.dumps(trip['StopTimes'], ensure_ascii=False)
+    return []
+
+
 
 def GetRouteArrival(route_name, direction):
     city = 'Hsinchu'
@@ -83,3 +116,4 @@ def GetRouteArrival(route_name, direction):
 
 if __name__ == '__main__':
     route_name = '182'
+    print(GetBusScheduleNow(route_name, 1))
