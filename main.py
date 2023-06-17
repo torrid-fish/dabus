@@ -61,6 +61,9 @@ def GetRouteArrival(route_name, direction):
     return_result = json.loads("[]")
     element_template = json.loads('{"name": "", "arrivalTime": -1}')
 
+    with open('temp.json', 'w') as f:
+        f.write(json.dumps(request_result, ensure_ascii=False))
+
     for index in range(len(request_result)):
         if(request_result[index]['PlateNumb'] == '-1' or
            request_result[index]['Direction'] != direction or
@@ -80,5 +83,3 @@ def GetRouteArrival(route_name, direction):
 
 if __name__ == '__main__':
     route_name = '182'
-    #result = GetRouteArrival(route_name, 0)
-    #print(json.dumps(result, ensure_ascii=False))
