@@ -131,9 +131,6 @@ def GetBusArrivalTime(bus_name, bus_type, direction):
     estimate_times = []
     time_table = GetBusScheduleNow(bus_name, direction)
 
-    with open('why.json', 'w') as f:
-        f.write(json.dumps(result, ensure_ascii=False))
-
     for cur in range(1, routes_len['{}_{}'.format(bus_name, direction)] + 1):
         for stop in result:
             if(stop['SubRouteName']['Zh_tw'] != bus_name or stop['Direction'] != direction or stop['StopSequence'] != cur):
