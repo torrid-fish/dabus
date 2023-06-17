@@ -8,6 +8,14 @@ with open("./StopList.json", "r", encoding="utf-8") as f:
 with open("./RouteStop.json", "r", encoding="utf-8") as f:
     RouteStop = json.loads(f.read())
 
+with open("./Schedule.json", "r", encoding="utf-8") as f:
+    Schedule = json.loads(f.read())
+
+def getOffSet(route, sequence_number):
+    t1 = Schedule[route][0]["StopTimes"][sequence_number-1]["ArrivalTime"][3:5]
+    t2 = Schedule[route][0]["StopTimes"][sequence_number]["ArrivalTime"][3:5]
+    return (int(t1) - int(t2)) * 60
+
 def distance(lat1: float, lon1: float, lat2: float, lon2: float):
     """
     Calculating the distance between to points on earth.
@@ -54,7 +62,7 @@ def score(distance_from, distance_to, travel_time, waiting_time):
     """
     Score the route based on given parameters.
     """
-    a, b, c, d = 40, 10, 1, 4
+    a, b, c, d = 40, 10, 0, 4
     return a * distance_from + b * distance_to + c * travel_time + d * waiting_time
 
 def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
@@ -110,10 +118,16 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
             
             distance_from = distance(from_lat, from_lon, from_stop["Lat"], from_stop["Lon"])
             distance_to = distance(to_lat, to_lon, to_stop["Lat"], to_stop["Lon"])
-            if from_time > to_time:
-                travel_time = from_time - to_time
-            else:
-                travel_time = from_time + to_time
+            
+            # calculating travel time
+            travel_time, last = 0, j
+            for k in range(j, len(estimated_times)-1, 1):
+                if estimated_times[k] > estimated_times[k+1]:
+                    travel_time += estimated_times[k] - estimated_times[last] + getOffSet(f'{to_stop["RouteName"]}_{to_stop["Direction"]}', get_on_stops[k]["StopSequence"])
+                    last = k+1
+
+            if last == j:
+                travel_time = estimated_times[-1] - estimated_times[j]
 
             wait_time = from_time
 
