@@ -80,21 +80,33 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
     """
 
     # Find those near stops
-    threshold = 0.5
-    nearstops = find_near_stops(to_lat, to_lon, threshold)
+    maximum = 20
+    threshold = 1.0
+
+    while True:
+        nearstops = find_near_stops(to_lat, to_lon, threshold)
+        if len(nearstops) > maximum:
+            threshold /= 2
+        else:
+            break
+        
     print(f"Find {len(nearstops)} bus stops around destination.")
 
     # Retrieve the route data according to nearstops
     possible_routes = []
     for i in range(len(nearstops)):
-        get_on_stops = RouteStop[f'{nearstops[i]["RouteName"]}_{nearstops[i]["Direction"]}'][0:nearstops[i]["StopSequence"]]
+        estimated_times = GetBusArrivalTime(nearstops[i]["RouteName"], nearstops[i]["BusType"], nearstops[i]["Direction"], nearstops[i]["StopSequence"])
+        if len(estimated_times) == 0:
+            continue
+        print(estimated_times)
+        get_on_stops = RouteStop[f'{nearstops[i]["RouteName"]}_{nearstops[i]["Direction"]}'][0:nearstops[i]["StopSequence"]-1] # Don't consider get-on and get-off stop be the same
         for j in range(len(get_on_stops)):
             from_stop, to_stop = get_on_stops[j], nearstops[i]
-            from_time = 1000 # GetBusArrivalTime(to_stop["RouteName"], to_stop["BusType"], to_stop["Direction"], from_stop["StopSequence"])
-            to_time = 100 # GetBusArrivalTime(to_stop["RouteName"], to_stop["BusType"], to_stop["Direction"], to_stop["StopSequence"])
-            
+            from_time = estimated_times[j]
+            to_time = estimated_times[-1]
+
             if from_time < 0 or to_time < 0:
-                break
+                continue
             
             distance_from = distance(from_lat, from_lon, from_stop["Lat"], from_stop["Lon"])
             distance_to = distance(to_lat, to_lon, to_stop["Lat"], to_stop["Lon"])
@@ -125,3 +137,5 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
 
 
 result = routing(24.780765, 120.989119, 24.817373, 120.996565)
+for i in range(len(result)):
+    print(result[i])
