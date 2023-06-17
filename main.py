@@ -153,6 +153,27 @@ def GetBusArrivalTime(bus_name, bus_type, direction, last_stop_sequence):
 
     return estimate_times
 
+def GetWalkingTime(start_lat, start_lon, end_lat, end_lon):
+    """
+    Get walking time from start to end by google api
+
+    start_lat -- (double) latitude of start point
+    start_lon -- (double) longitude of start point
+    end_lat   -- (double) latitude of end point
+    end_lon   -- (double) longitude of end point
+
+    Return an integer represent the time to travel from start to end in seconds.
+    Note that this api only return value that greater or equal to 1 minute
+    If there's any error, then it'll return -1
+    """
+    google_api_key = 'AIzaSyAxFtQQD7u-IlVGquIA9HLBEcJadijtkD8'
+    request_url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins={},{}&destinations={},{}&mode=walking&key={}'.format(start_lat, start_lon, end_lat, end_lon, google_api_key)
+    result = json.loads(requests.request("GET", request_url, headers={}, data={}).text)
+    try:
+        return int(result['rows'][0]['elements'][0]['duration']['text'].split(' ')[0]) * 60
+    except:
+        return -1
+
 
 def GetRouteArrival(route_name, direction):
     city = 'Hsinchu'
@@ -186,6 +207,7 @@ def GetRouteArrival(route_name, direction):
     return return_result
 
 if __name__ == '__main__':
-    bus_name = '182'
+    bus_name = '藍線1區'
     # bus_name, bus_type, direction, stop_sequence
-    print([ int(x / 60) for x in GetBusArrivalTime(bus_name, 0, 0, 10)])
+    # print([ int(x / 60) for x in GetBusArrivalTime(bus_name, 0, 0, 40)])
+    print(GetWalkingTime(24.801818, 120.971263, 24.798355, 120.994509))
