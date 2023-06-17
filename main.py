@@ -55,17 +55,17 @@ def SendRequest(request_url):
     data_response = requests.get(request_url, headers=d.get_data_header())
     return json.loads(data_response.text)
 
-def GetBusScheduleNow(route_name, direction):
+def GetBusScheduleNow(bus_name, direction):
     """
     Get specific bus's schedule according current time
-    route_name -- (str) The bus's name(SubrouteName)
+    bus_name   -- (str) The bus's name (SubRouteName)
     direction  -- (int) The direction of the bus (0:'去程',1:'返程',2:'迴圈',255:'未知')
     
     return a list of timetable
     """
 
     current = datetime.strptime('{}:{}'.format(datetime.now().hour, datetime.now().minute) ,'%H:%M')
-    name = '{}_{}'.format(route_name, direction)
+    name = '{}_{}'.format(bus_name, direction)
     schedule = json.loads(open('Schedule.json', 'r', encoding="utf-8").read())
     if(name not in schedule):
         return []
@@ -78,9 +78,73 @@ def GetBusScheduleNow(route_name, direction):
         delta = (start - current).total_seconds()
         if(delta < 0):
             continue
-        return json.dumps(trip['StopTimes'], ensure_ascii=False)
+        return trip['StopTimes']
     return []
 
+def GetBusArrivalTime(bus_name, bus_type, direction, stop_name):
+    """
+    Get arrival time of specific bus's specific stop
+
+    bus_name   -- (str) Name of the bus (SubRouteName)
+    bus_type   -- (int) City / County / InterCity Bus (0 / 1 / 2)
+    direction  -- (int) Direction of the bus (0:'去程',1:'返程',2:'迴圈',255:'未知')
+    stop_name  -- (str) Name of query stop
+
+    return an integer represent remaining minutes
+    if the last bus has been gone or there's no bus today, return -1
+    if the stop is temporary closed, return -2
+    """
+
+    current_time = datetime.now()
+    result = ''
+    args = '?format=JSON'
+    if(bus_type == 0):
+        city = 'Hsinchu'
+        api_type = 'EstimatedTimeOfArrival/Streaming/City/{}/{}{}'.format(city, bus_name, args)
+        request_url = base_url.format(api_type)
+        result = SendRequest(request_url)
+    elif(bus_type == 1):
+        city = 'HsinchuCounty'
+        api_type = 'EstimatedTimeOfArrival/Streaming/City/{}/{}{}'.format(city, bus_name, args)
+        request_url = base_url.format(api_type)
+        result = SendRequest(request_url)
+    else:
+        request_url = 'https://tdx.transportdata.tw/api/basic/v2/Bus/EstimatedTimeOfArrival/Streaming/InterCity/{}'.format(bus_name)
+        result = SendRequest(request_url)
+    
+    print(json.dumps(result, ensure_ascii=False))
+    # Check instant status
+    for stop in result:
+        if(stop['SubRouteName']['Zh_tw'] != bus_name or stop['Direction'] != direction or stop['StopName']['Zh_tw'] != stop_name):
+            continue
+        else:
+            if(stop['StopStatus'] == 3 or stop['StopStatus'] == 4):
+                return -1
+            elif(stop['StopStatus'] == 2):
+                return -2
+            if('EstimateTime' not in stop):
+                continue
+            src_trans_time = datetime.fromisoformat(stop['SrcTransTime']).replace(tzinfo=None)
+            trans_time_delta = int((current_time - src_trans_time).total_seconds())
+            estimate_time = int((int(stop['EstimateTime']) - trans_time_delta) / 60)
+            if(estimate_time < 0):
+                estimate_time = 0
+            return estimate_time
+
+    # Check next stop time by scheule
+    time_table = GetBusScheduleNow(bus_name, direction)
+    if(time_table == []):
+        return -1
+    for stop in time_table:
+        if stop['StopName'] != stop_name:
+            continue
+        else:
+            current_time = datetime.strptime('{}:{}'.format(datetime.now().hour, datetime.now().minute) ,'%H:%M')
+            arrival_time = datetime.strptime(stop['ArrivalTime'], '%H:%M')
+            delta = int((arrival_time - current_time).total_seconds() / 60)
+            return delta
+    
+    return -1
 
 
 def GetRouteArrival(route_name, direction):
@@ -115,5 +179,6 @@ def GetRouteArrival(route_name, direction):
     return return_result
 
 if __name__ == '__main__':
-    route_name = '182'
-    print(GetBusScheduleNow(route_name, 1))
+    bus_name = '182'
+    print(GetBusArrivalTime(bus_name, 0, 1, '清華大學'))
+    print(json.dumps(GetRouteArrival(bus_name, 0), ensure_ascii=False))
