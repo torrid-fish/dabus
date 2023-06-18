@@ -1,4 +1,5 @@
 import json
+import time
 from math import radians, cos, sin, asin, sqrt
 from utility import GetBusArrivalTime, GetWalkingTime
 
@@ -14,7 +15,7 @@ with open("./Schedule.json", "r", encoding="utf-8") as f:
 def getOffSet(route, sequence_number):
     t1 = Schedule[route][0]["StopTimes"][sequence_number-1]["ArrivalTime"][3:5]
     t2 = Schedule[route][0]["StopTimes"][sequence_number]["ArrivalTime"][3:5]
-    return (int(t1) - int(t2)) * 60
+    return (int(t2) - int(t1)) * 60
 
 def distance(lat1: float, lon1: float, lat2: float, lon2: float):
     """
@@ -58,12 +59,18 @@ def find_near_stops(lat: float, lon: float, threshold: float):
     # Return the acceptable stops
     return _StopList[:threshold_idx]
 
-def score(from_walk_time, to_walk_time, travel_time, waiting_time):
+def score(from_walk_distance, to_walk_distance, travel_time, waiting_time):
     """
     Score the route based on given parameters.
     """
-    a, b, c, d = 1, 1, 1, 1
-    return a * from_walk_time + b * to_walk_time + c * travel_time + d * waiting_time
+    a, b, c, walk_speed = 1, 0.2, 0.5, 0.1
+    from_walk_time, to_walk_time = from_walk_distance / walk_speed, to_walk_distance / walk_speed
+    if from_walk_time > waiting_time:
+        walk_wait_diff = 1e8
+    else:
+        walk_wait_diff = waiting_time - from_walk_time
+
+    return a * walk_wait_diff + b * from_walk_time + c * waiting_time 
 
 def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
     """
@@ -104,15 +111,17 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
     possible_routes = []
     for i in range(len(nearstops)):
         estimated_times = GetBusArrivalTime(nearstops[i]["RouteName"], nearstops[i]["BusType"], nearstops[i]["Direction"])
+        print(estimated_times)
         if len(estimated_times) == 0:
             continue
-        # print(estimated_times)
+        # print(nearstops[i]["RouteName"], nearstops[i]["StopName"], nearstops[i]["StopSequence"])
         buslist = RouteStop[f'{nearstops[i]["RouteName"]}_{nearstops[i]["Direction"]}']
-        get_on_stops = buslist[0:nearstops[i]["StopSequence"]-1] # Don't consider get-on and get-off stop be the same
+        get_on_stops = buslist[0:nearstops[i]["StopSequence"]-1] # Don't consider get-on and get-off stop be the same\
         for j in range(nearstops[i]["StopSequence"]-1):
             from_stop, to_stop = get_on_stops[j], nearstops[i]
-            from_time = estimated_times[j]
-            to_time = estimated_times[-1]
+            from_idx, to_idx = j, to_stop["StopSequence"]-1
+            from_time = estimated_times[from_idx]
+            to_time = estimated_times[to_idx]
 
             if from_time < 0 or to_time < 0:
                 continue
@@ -121,14 +130,13 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
             distance_to = distance(to_lat, to_lon, to_stop["Lat"], to_stop["Lon"])
             
             # calculating travel time
-            travel_time, last = 0, j
-            for k in range(j, len(estimated_times)-1, 1):
+            travel_time, last = 0, to_idx
+            for k in range(to_idx-1, from_idx-1, -1):
                 if estimated_times[k] > estimated_times[k+1]:
-                    travel_time += estimated_times[k] - estimated_times[last] + getOffSet(f'{to_stop["RouteName"]}_{to_stop["Direction"]}', get_on_stops[k]["StopSequence"])
-                    last = k+1
+                    travel_time += estimated_times[last] + getOffSet(f'{to_stop["RouteName"]}_{to_stop["Direction"]}', k+1)
+                    last = k
 
-            if last == j:
-                travel_time = estimated_times[-1] - estimated_times[j]
+            travel_time += estimated_times[last] - estimated_times[from_idx]
 
             wait_time = from_time
 
@@ -142,30 +150,31 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
                     "name": buslist[k]["StopName"],
                     "arriveTime": estimated_times[k]
                 })
-                if k > 0 and estimated_times[k] < estimated_times[k-1]:
-                    currentstops.append(buslist[k-1]["StopName"])
+                if k < len(buslist)-1 and estimated_times[k] > estimated_times[k+1]:
+                    currentstops.append(buslist[k]["StopName"])
             
+            from_distance = distance(from_lat, from_lon, from_stop["Lat"], from_stop["Lon"])
+            to_distance = distance(to_lat, to_lon, to_stop["Lat"], to_stop["Lon"])
             possible_routes.append({
                 "busName": to_stop["RouteName"],
                 "departureStop": from_stop["StopName"],
                 "destinationStop": to_stop["StopName"],
                 "currentStop": currentstops,
-                "arriveTime": wait_time / 60,
+                "arriveTime": wait_time,
                 "FromStopLat": from_stop["Lat"],
                 "FromStopLon": from_stop["Lon"],
                 "Stops": stops,
                 "BusType": to_stop["BusType"],
                 "Direction": to_stop["Direction"],
-                "FromStopWalkTime": from_walk_time,
-                "ToStopWalkTime": to_walk_time,
-                "TravelTime": travel_time, 
-                "WaitTime": wait_time
+                "score": score(from_distance, to_distance, travel_time, wait_time),
             })
+        
+        time.sleep(0.0125)
     
     print(f"There are {len(possible_routes)} possible routes currently.")
 
     # Sorting all possible routes
-    sorted_routes = sorted(possible_routes, key= lambda route: score(route["FromStopWalkTime"], route["ToStopWalkTime"], route["TravelTime"], route["WaitTime"]))
+    sorted_routes = sorted(possible_routes, key= lambda route: route["score"])
 
     # Return the optimize result
     return sorted_routes

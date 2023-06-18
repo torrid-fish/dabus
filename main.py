@@ -11,8 +11,11 @@ def search():
     depa = args['depa'].split(',')
     try:
         data = routing(float(depa[0]), float(depa[1]), float(dest[0]), float(dest[1]))
-    except:
-        return "API overflow:(" # Retry design is required
+    except Exception as e:
+        print(e)
+        return json.dumps({
+            "status": "bad"
+        })
 
     return json.dumps({
         "status": "ok",
@@ -34,7 +37,7 @@ def notification():
     
     return json.dumps({
         "status": "ok",
-        "time": time
+        "time": int(time / 60)
     }, ensure_ascii=False)
 
 if __name__ == '__main__':
