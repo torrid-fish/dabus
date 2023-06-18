@@ -12,25 +12,32 @@ import {
     Switch
 } from 'react-native';
 
-import ReminderCard from './ReminderCard';
+import RecentSearchCard from './RecentSearchCard';
 
 import {useData} from './DataContext.js'
 
-const ReminderList = () => {
+const SearchAnswer = ({navigation}) => {
     const {reminder} = useData();
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView>
-                {reminder.map(rem => <ReminderCard {...rem}/>)}
-            </ScrollView>
+             <RecentSearchCard name='新竹火車站' navigation = {navigation}/>
         </SafeAreaView>
     );
   };
   
 const styles = StyleSheet.create({
     container :{
-        marginTop:30
+        justifyContent :'center',
+        // alignContent :'center',
+        // marginRight:10,
+        
     },
+    scrollContainer : {
+        // marginLeft :10,
+        marginright:10,
+        
+    },
+
 });
 
-export default ReminderList;
+export default SearchAnswer;

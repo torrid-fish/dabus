@@ -95,7 +95,17 @@ const Setting_Page = () => {
         }}>
           <View style = {{flexDirection:'row', alignItems:'center'}}>
           <Ionicons name="person-circle-outline" size={40} color="black" />
-            <Text style={{lineHeight: 30, fontSize: 30, marginLeft: 10}}>登入帳號</Text>
+          
+            <TouchableOpacity onPress={()=>{dispatch({
+                  type: 'Login'
+                })
+                }}>
+
+              <Text style={{lineHeight: 30, fontSize: 30, marginLeft: 10}}>
+                登入帳號
+                </Text>
+
+            </TouchableOpacity>
 
           </View>
 

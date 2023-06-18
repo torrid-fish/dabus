@@ -1,15 +1,30 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView,ScrollView, StyleSheet, TextInput,View} from 'react-native';
-
-
+import {useData, useDataDispatch} from './DataContext.js'
 
 const TextInputDestination = (props) => {
-  const [text, setText] = React.useState('');
+  const {settings: {color}} = useData();
+
+  const [text, setText] = useState('');
   const findDestination = () => {
     if (props.busStops.find(text))
       props.addRecentSearch(text);
   }
-
+  
+  const styles = StyleSheet.create({
+    input: {
+      backgroundColor: color, 
+      width:344, 
+      height:44, 
+      margin: 20, 
+      borderRadius: 10, 
+      opacity: 0.6,
+      justifyContent :'left',
+      flexDirection:'row',
+      alignItems: 'center',
+    },
+  });
+  
   return (
     <SafeAreaView>
       {/* <ScrollView style={{height: 10}} keyboardShouldPersistTaps = {true}> */}
@@ -32,14 +47,5 @@ const TextInputDestination = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    width: 180,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-});
 
 export default TextInputDestination;

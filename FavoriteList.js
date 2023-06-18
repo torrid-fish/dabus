@@ -8,12 +8,10 @@ import {useData} from './DataContext.js'
 
 const FavoriteList = () => {
     const {favorite} = useData();
-    // console.log(favorite);
-    // console.log("here")
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollContainer}>
-                {favorite.map(fav => <FavoriteCard name={fav}/>)}
+                {favorite.map(fav => <FavoriteCard  name={fav}/>)}
             </ScrollView>
         </SafeAreaView>
     );
@@ -21,15 +19,8 @@ const FavoriteList = () => {
   
 const styles = StyleSheet.create({
     container :{
-        justifyContent :'center',
-    
+        marginTop:30
     },
-    scrollContainer : {
-        // marginLeft :10,
-        marginright:30,
-        
-    },
-
 });
 
 export default FavoriteList;

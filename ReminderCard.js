@@ -6,9 +6,10 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { AntDesign } from '@expo/vector-icons'; 
 import { SelectList } from 'react-native-dropdown-select-list'
 import { MaterialIcons } from '@expo/vector-icons'; 
-import {useDataDispatch} from './DataContext.js'
+import {useData, useDataDispatch} from './DataContext.js'
 
 const Reminder = props => {
+  const {settings:{color}} = useData();
   const dispatch = useDataDispatch();
 
   const [expanded, setExpanded] = useState(false);
@@ -27,6 +28,190 @@ const Reminder = props => {
 
   const chineseDay = ['日','一','二','三','四','五','六']
 
+  const sceenwidth = Dimensions.get('window').width;
+
+  const Noti_styles = StyleSheet.create({
+    toptext1:{
+      marginLeft:15,
+      marginRight:50,
+      marginBottom:10,
+      marginTop:8,
+      fontSize:12,
+      color:"#858484",
+    },
+    toptext2:{
+      marginLeft:0,
+      marginRight:80,
+      marginBottom:0,
+      fontSize:22,
+      color:"#0072B2",
+    },
+    toptext3:{
+      marginLeft:15,
+      marginRight:50,
+      marginBottom:10,
+      marginTop:10,
+      fontSize:20,
+      color:"#D53737",
+    },
+    toptext4:{
+      marginLeft:0,
+      marginRight:0,
+      marginBottom:0,
+      fontSize:18,
+      color:"black",
+    },
+    toptext5:{
+      marginLeft:15,
+      marginRight:50,
+      marginBottom:20,
+      marginTop:20,
+      fontSize:32,
+      color:"#D53737",
+    },
+    toptext6:{
+      fontSize:16,
+      top:0,
+      color:"black",
+      position:'relative',
+      justifyContent:'space-between',
+    },
+    horizontalLine: {
+      borderBottomColor: "black",
+      backgroundColor: "black",
+      borderBottomWidth: 1,
+      width: 315,
+      color: "black",
+      marginLeft:15,
+      marginRight:15,
+      marginBottom:20,
+      justifyContent: 'center'
+    },
+    extend_icon: {
+      color: "#858484",
+      marginLeft:160,
+      marginRight:150,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    time_select:{
+      justifyContent: 'center',
+      marginTop:30,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position:'absolute'
+    },
+    noti:{
+      width: sceenwidth-40,
+      justifyContent: 'center',
+      marginRight:20,
+      marginLeft:20,
+      marginTop:10,
+      paddingTop:10,
+      paddingBottom:10,
+      backgroundColor:'#D9D9D9',
+      borderRadius:10,
+      borderWidth: 1,
+      borderColor: '#fff'
+    },
+    time:{
+      marginLeft:15,
+      marginRight:50,
+      marginBottom:20,
+      flexDirection: 'row',
+      alignItems: 'center',
+      position:'relative',
+      maxWidth: 200,
+    },
+    rpt_alarm_text:{
+      marginLeft:15,
+      marginRight:50,
+      fontSize:16,
+      color:"black",
+    },
+    rpt_alarm_btn:{
+      marginLeft:0,
+      marginRight:7,
+      borderColor:'black',
+      fontSize:16,
+      color:"white",
+      position:'relative',
+      flexDirection:'row',
+      width: 40,
+      height: 40,
+      borderRadius: 50,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    rpt_alarm_week:{
+      marginLeft:10,
+      marginRight:50,
+      flexDirection: 'row',
+      justifyContent: 'row',
+      paddingTop:10,
+      paddingBottom:10,
+    },
+    rpt_alarm_day:{
+      fontSize:22,
+      color:"white",
+    },
+    repeat_time_select:{
+      justifyContent: 'center',
+      marginTop:20,
+      marginBottom:15,
+      marginLeft:15,
+      marginRight:5,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position:'relative'
+    },
+    hour_select:{
+      justifyContent: 'center',
+      marginTop:30,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position:'absolute'
+    },
+    minute_select:{
+      justifyContent: 'center',
+      marginTop:30,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position:'absolute'
+    },
+    repeat_select_text:{
+      fontSize:25,
+      marginLeft:5,
+      marginRight:5,
+      position:"relative"
+    },
+    bus_and_del:{
+      marginLeft:0,
+      marginRight:15,
+      justifyContent: 'center',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position:'relative'
+    },
+    del:{
+      margin:0,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginButton:20,
+    },
+    del_icon:{
+      margin:0,
+    },
+    del_text:{
+      margin:0,
+    }
+  });
   return (
     <TouchableOpacity
       style={[Noti_styles.noti,{opacity:0.8}]}
@@ -174,189 +359,5 @@ const Reminder = props => {
     </TouchableOpacity>
   );
 };
-const sceenwidth = Dimensions.get('window').width;
-
-const Noti_styles = StyleSheet.create({
-  toptext1:{
-    marginLeft:15,
-    marginRight:50,
-    marginBottom:10,
-    marginTop:8,
-    fontSize:12,
-    color:"#858484",
-  },
-  toptext2:{
-    marginLeft:0,
-    marginRight:80,
-    marginBottom:0,
-    fontSize:22,
-    color:"#0072B2",
-  },
-  toptext3:{
-    marginLeft:15,
-    marginRight:50,
-    marginBottom:10,
-    marginTop:10,
-    fontSize:20,
-    color:"#D53737",
-  },
-  toptext4:{
-    marginLeft:0,
-    marginRight:0,
-    marginBottom:0,
-    fontSize:18,
-    color:"black",
-  },
-  toptext5:{
-    marginLeft:15,
-    marginRight:50,
-    marginBottom:20,
-    marginTop:20,
-    fontSize:32,
-    color:"#D53737",
-  },
-  toptext6:{
-    fontSize:16,
-    top:0,
-    color:"black",
-    position:'relative',
-    justifyContent:'space-between',
-  },
-  horizontalLine: {
-    borderBottomColor: "black",
-    backgroundColor: "black",
-    borderBottomWidth: 1,
-    width: 315,
-    color: "black",
-    marginLeft:15,
-    marginRight:15,
-    marginBottom:20,
-    justifyContent: 'center'
-  },
-  extend_icon: {
-    color: "#858484",
-    marginLeft:160,
-    marginRight:150,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  time_select:{
-    justifyContent: 'center',
-    marginTop:30,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position:'absolute'
-  },
-  noti:{
-    width: sceenwidth-40,
-    justifyContent: 'center',
-    marginRight:20,
-    marginLeft:20,
-    marginTop:10,
-    paddingTop:10,
-    paddingBottom:10,
-    backgroundColor:'#D9D9D9',
-    borderRadius:10,
-    borderWidth: 1,
-    borderColor: '#fff'
-  },
-  time:{
-    marginLeft:15,
-    marginRight:50,
-    marginBottom:20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    position:'relative',
-    maxWidth: 200,
-  },
-  rpt_alarm_text:{
-    marginLeft:15,
-    marginRight:50,
-    fontSize:16,
-    color:"black",
-  },
-  rpt_alarm_btn:{
-    marginLeft:0,
-    marginRight:7,
-    borderColor:'black',
-    fontSize:16,
-    color:"white",
-    position:'relative',
-    flexDirection:'row',
-    width: 40,
-    height: 40,
-    borderRadius: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  rpt_alarm_week:{
-    marginLeft:10,
-    marginRight:50,
-    flexDirection: 'row',
-    justifyContent: 'row',
-    paddingTop:10,
-    paddingBottom:10,
-  },
-  rpt_alarm_day:{
-    fontSize:22,
-    color:"white",
-  },
-  repeat_time_select:{
-    justifyContent: 'center',
-    marginTop:20,
-    marginBottom:15,
-    marginLeft:15,
-    marginRight:5,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position:'relative'
-  },
-  hour_select:{
-    justifyContent: 'center',
-    marginTop:30,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position:'absolute'
-  },
-  minute_select:{
-    justifyContent: 'center',
-    marginTop:30,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position:'absolute'
-  },
-  repeat_select_text:{
-    fontSize:25,
-    marginLeft:5,
-    marginRight:5,
-    position:"relative"
-  },
-  bus_and_del:{
-    marginLeft:0,
-    marginRight:15,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position:'relative'
-  },
-  del:{
-    margin:0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginButton:20,
-  },
-  del_icon:{
-    margin:0,
-  },
-  del_text:{
-    margin:0,
-  }
-});
 
 export default Reminder;

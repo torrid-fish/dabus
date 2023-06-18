@@ -8,22 +8,30 @@ import {useData, useDataDispatch} from './DataContext.js'
 
 
 
-const RecentSearchCard = props => {
+const RecentSearchCard = ({name, navigation}) => {
   const {favorite} = useData();
   const dispatch = useDataDispatch();
+  // console.log(navigation)
+  // console.log(navigation.navigate)
 
-  const [isFav, setIsFav] = useState(favorite.includes(props.name));
+  const [isFav, setIsFav] = useState(favorite.includes(name));
+// navigation.navigate('BusDtail')
 
   return (
     <View>
       <View style={styles.container}>
-        <Text style = {styles.busstop}>{props.name}</Text>
+        
+        <TouchableOpacity onPress={()=> navigation.navigate('BusDtail') }>
+ 
+          <Text style = {styles.busstop}>{name}</Text>
+
+        </TouchableOpacity>
         
         <TouchableOpacity 
           onPress={() => {
             dispatch({
               type: isFav ? 'removeFavorite' : 'addFavorite',
-              name : props.name
+              name : name
             });
             setIsFav(!isFav);
           }}
@@ -43,10 +51,10 @@ const RecentSearchCard = props => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop:30,
-    marginBottom:20,
+    marginTop:10,
+    marginBottom:0,
     paddingBottom:20,
-    backgroundColor: "#DDD",
+    // backgroundColor: "#DDD",
     alignItems: "center",
     flexDirection: "row",
   },
@@ -56,10 +64,10 @@ const styles = StyleSheet.create({
   },
 
   busstop:{
-    marginLeft:20,
-    fontSize:20,
-    backgroundColor: '#DDD',
-    paddingTop:10,
+    marginLeft:30,
+    fontSize:25,
+    // backgroundColor: '#DDD',
+    paddingTop:0,
   }
 });
 
