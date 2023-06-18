@@ -3,6 +3,9 @@ import time
 from math import radians, cos, sin, asin, sqrt
 from utility import GetBusArrivalTime, GetWalkingTime
 
+# Parameters for walking
+walk_speed = 1.2 / 1000
+
 with open("./StopList.json", "r", encoding="utf-8") as f:
     StopList = json.loads(f.read())
 
@@ -63,14 +66,14 @@ def score(from_walk_distance, to_walk_distance, travel_time, waiting_time):
     """
     Score the route based on given parameters.
     """
-    a, b, c, walk_speed = 1, 0.2, 0.5, 0.1
+    
     from_walk_time, to_walk_time = from_walk_distance / walk_speed, to_walk_distance / walk_speed
     if from_walk_time > waiting_time:
         walk_wait_diff = 1e8
     else:
         walk_wait_diff = waiting_time - from_walk_time
 
-    return a * walk_wait_diff + b * from_walk_time + c * waiting_time 
+    return from_walk_time + walk_wait_diff + waiting_time + to_walk_time 
 
 def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
     """
@@ -109,6 +112,11 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
 
     # Retrieve the route data according to nearstops
     possible_routes = []
+    # Directly walk
+    possible_routes.append({
+        "busType": 11,
+        "score": distance(from_lat, from_lon, to_lat, to_lon) / walk_speed
+    })
     for i in range(len(nearstops)):
         estimated_times = GetBusArrivalTime(nearstops[i]["RouteName"], nearstops[i]["BusType"], nearstops[i]["Direction"])
         print(estimated_times)
