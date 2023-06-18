@@ -1,7 +1,7 @@
 import requests
 import json
 import copy, time
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 app_id = 'koios1143-d2c91cc5-2c58-4a06'
 app_key = 'b222cb12-0d88-478c-9f47-5c47d120f53b'
@@ -73,8 +73,9 @@ def GetBusScheduleNow(bus_name, direction):
     
     return a list of timetable
     """
+    direction = int(direction)
 
-    current = datetime.strptime('{}:{}'.format(datetime.now().hour, datetime.now().minute) ,'%H:%M')
+    current = datetime.strptime('{}:{}'.format(datetime.now(tz=timezone(timedelta(hours=8))).hour, datetime.now(tz=timezone(timedelta(hours=8))).minute) ,'%H:%M')
     name = '{}_{}'.format(bus_name, direction)
     if(name not in schedule):
         return []
@@ -92,6 +93,9 @@ def GetBusScheduleNow(bus_name, direction):
 
 
 def GetTime(bus_name, start_stop, direction, bus_type):
+    direction = int(direction)
+    bus_type = int(bus_type)
+
     arrival_list = GetBusArrivalTime(bus_name, bus_type, direction)
     name = '{}_{}'.format(bus_name, direction)
     stop_sequence = stop_code[name][start_stop]
@@ -109,8 +113,10 @@ def GetBusArrivalTime(bus_name, bus_type, direction):
     for each integer, if the last bus has been gone or there's no bus today, return -1
                       if the stop is temporary closed, return -2
     """
+    bus_type = int(bus_type)
+    direction = int(direction)
 
-    current_time = datetime.now()
+    current_time = datetime.now(tz=timezone(timedelta(hours=8)))
     result = ''
     args = '?format=JSON'
     if(bus_type == 0):
@@ -130,7 +136,7 @@ def GetBusArrivalTime(bus_name, bus_type, direction):
     # Check instant status
     estimate_times = []
     time_table = GetBusScheduleNow(bus_name, direction)
-
+    
     for cur in range(1, routes_len['{}_{}'.format(bus_name, direction)] + 1):
         for stop in result:
             if(stop['SubRouteName']['Zh_tw'] != bus_name or stop['Direction'] != direction or stop['StopSequence'] != cur):
@@ -163,11 +169,10 @@ def GetBusArrivalTime(bus_name, bus_type, direction):
                 if(stop2['StopSequence'] != cur):
                     continue
                 else:
-                    current_time2 = datetime.strptime('{}:{}'.format(datetime.now().hour, datetime.now().minute) ,'%H:%M')
+                    current_time2 = datetime.strptime('{}:{}'.format(datetime.now(tz=timezone(timedelta(hours=8))).hour, datetime.now(tz=timezone(timedelta(hours=8))).minute) ,'%H:%M')
                     arrival_time = datetime.strptime(stop2['ArrivalTime'], '%H:%M')
                     delta = int((arrival_time - current_time2).total_seconds())
                     estimate_times.append(delta)
-
     return estimate_times
 
 def GetWalkingTime(start_lat, start_lon, end_lat, end_lon):

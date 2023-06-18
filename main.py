@@ -35,10 +35,16 @@ def notification():
     except:
         time = -1
     
-    return json.dumps({
-        "status": "ok",
-        "time": int(time / 60)
-    }, ensure_ascii=False)
+    if(time > 0):
+        return json.dumps({
+            "status": "ok",
+            "time": int(time / 60)
+        }, ensure_ascii=False)
+    else:
+        return json.dumps({
+            "status": "ok",
+            "time": time
+        }, ensure_ascii=False)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8080))
