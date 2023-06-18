@@ -168,7 +168,7 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
                 "departureStop": from_stop["StopName"],
                 "destinationStop": to_stop["StopName"],
                 "currentStop": currentstops,
-                "arriveTime": wait_time,
+                "arriveTime": int(wait_time/60),
                 "FromStopLat": from_stop["Lat"],
                 "FromStopLon": from_stop["Lon"],
                 "Stops": stops,
