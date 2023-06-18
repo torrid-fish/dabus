@@ -9,7 +9,7 @@ import { SelectList } from 'react-native-dropdown-select-list'
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { useRef } from 'react';
 import {useData, useDataDispatch} from './DataContext.js'
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 const FavoriteCard = props => {
@@ -32,6 +32,7 @@ const FavoriteCard = props => {
       <TouchableOpacity onPress={handleSearchPress} style={Fav_styles.fav}>
         <View style={Fav_styles.bus_and_del}>
           <View style={Fav_styles.bus}>
+
             <Text style={Fav_styles.text1}>前往: <Text style={Fav_styles.text2}>{props.name}</Text></Text>
             
             <Text style={Fav_styles.text3}>{props.bus_name}
@@ -44,9 +45,9 @@ const FavoriteCard = props => {
 
           </View>
           
-          <TouchableOpacity onPress={handleDelPress} style={Fav_styles.del} >
-            <Ionicons style={Fav_styles.del_icon} name="heart-dislike-sharp" size={45} color="black" />
-            <Text style={Fav_styles.del_text } >取消最愛</Text>
+          <TouchableOpacity onPress={handleDelPress} style={{ marginLeft:40}} >
+              <MaterialCommunityIcons name="star-off-outline" size={40} color="black" />
+            <Text style={{fontSize:10} } >取消最愛</Text>
           </TouchableOpacity>
         </View>   
       </TouchableOpacity>
@@ -62,22 +63,20 @@ const FavoriteCard = props => {
       justifyContent: 'center',
       marginRight:20,
       marginLeft:20,
-      marginTop:10,
+      marginTop:20,
       paddingTop:10,
       paddingBottom:10,
-      backgroundColor:'#D9D9D9',
+      // backgroundColor:'#D9D9D9',
       borderRadius:10,
       borderWidth: 1,
-      borderColor: '#fff'
+      borderColor: 'black',
+      opacity:0.8
     },
     bus_and_del:{
-      marginLeft:40,
-      marginRight:40,
-      justifyContent: 'center',
+      marginRight:0,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      position:'relative'
     },
     text1:{
       marginLeft:0,

@@ -1,21 +1,23 @@
-import React, {useState} from 'react';
+import React, {useState,useRef} from 'react';
+import {SafeAreaView,ScrollView, StyleSheet,TouchableOpacity,Dimensions, TextInput, View, Text,Button,Switch} from 'react-native';
+import {Animated, PanResponder} from 'react-native';
+import { AntDesign } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons'; 
+import {Ionicons} from '@expo/vector-icons/Ionicons';
 
-import {SafeAreaView, StyleSheet,TouchableOpacity, TextInput, View, Text,Button,Switch} from 'react-native';
-
-
+import Bus_tile from './Bus_tile.js';
 const BusDetailCard = () => {
 
     return (
-        // <View style = {styles.container}>
-        //   <Text style={styles.text}>This is a card</Text>
-        //   <Text>This is another card</Text>
-        // </View>
-        <Bus_card></Bus_card>
+        <View >
+          <Bus_card></Bus_card>
+          <Bus_tile></Bus_tile>
+        </View>
+
     );
   };
   
 const styles = StyleSheet.create({
-
 container: {
     marginTop :20,
     height: 100, 
@@ -33,7 +35,7 @@ text: {
 });
 
 
-const Bus_card = (props) => {
+const Bus_card = () => {
   const screenHeight = Dimensions.get('window').height;
   const maxCardHeight = 0.5 * screenHeight;
   const screenWidth = Dimensions.get('window').width;
@@ -87,6 +89,7 @@ const Bus_card = (props) => {
           </ScrollView>
         </View>
       </Animated.View>
+
     </View>
   );
 };
@@ -121,5 +124,6 @@ const Bus_card_styles = StyleSheet.create({
     zIndex:100,
 },
 });
+
 
 export default BusDetailCard;

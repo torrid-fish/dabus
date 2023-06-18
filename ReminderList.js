@@ -30,7 +30,7 @@ const ReminderList = () => {
 const styles = StyleSheet.create({
     container :{
         justifyContent :'center',
-        alignContent :'center',
+        // alignContent :'center',
         // marginRight:10,
         
     },

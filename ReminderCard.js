@@ -29,7 +29,7 @@ const Reminder = props => {
 
   return (
     <TouchableOpacity
-      style={Noti_styles.noti}
+      style={[Noti_styles.noti,{opacity:0.8}]}
       underlayColor='#fff'
     >
       <Text style={Noti_styles.toptext1}>前往: {props.to}</Text>

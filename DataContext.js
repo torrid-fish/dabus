@@ -42,19 +42,32 @@ function dataReducer(data, action) {
       }};
     }
     case 'setColor': {
-      // console.log(data.settings.color)
-      // console.log(action.color)
       return {...data, settings: {
         ...data.settings,
         color: action.color
       }};
     }
-    case 'addtreePercents':{
-      if (data.treePercents + action.treePercents > 100) {
-        // TODO: handle fruit
-        return {
-          ...data,
-          treePercents: 0
+    case 'addTreePercents':{
+      if (data.treePercents + action.treePercents >= 100) {
+        const newColor = data.colors.find(c => c.unlocked === false);
+        if (newColor) 
+          return {
+            ...data,
+            showFruit: true,
+            newColor: newColor.color,
+            colors: data.colors.map(c => {
+              if (c.color === newColor.color)  
+                return {
+                  ...c,
+                  unlocked: true
+                }
+              else 
+                return c;
+            })
+          }
+        else {
+          console.log('Not enough colors!');
+          return data;
         }
       }
       else{
@@ -176,6 +189,13 @@ function dataReducer(data, action) {
         )
       };
     }
+    case 'hideFruit': {
+      return {
+        ...data,
+        showFruit: false,
+        treePercents: 0
+      }
+    }
     default: {
       throw Error('Unknown action: ' + action.type);
     }
@@ -193,10 +213,10 @@ const initialData = {
     'stop 4',
   ],
   recentlySearched: [
-    '陳正霖',
-    'ycc',
-    'cc',
-    'hiiiiiiiiiii'
+    'stop 1',
+    'stop 6',
+    'stop 8',
+    'stop 99'
   ],
   reminder: [
     {
@@ -236,5 +256,12 @@ const initialData = {
       remind: 10
     },
   ],
-  treePercents: 30,
+  treePercents: 40,
+  showFruit: false,
+  newColor: null,
+  colors: [
+    {color: '#07B', unlocked: true},
+    {color: '#D83', unlocked: false},
+    {color: '#56B', unlocked: false},
+  ],
 };
