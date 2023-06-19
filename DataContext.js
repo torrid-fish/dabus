@@ -21,7 +21,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth(app);
-var uid;
 
 const DataContext = createContext(null);
 
@@ -68,9 +67,9 @@ async function fetchData() {
     }
   })(); // don't remove the ()
   if (localData.loggedIn) {
-    const uuid = localData.uuid;
+    const uid = localData.uid;
     try {
-      const dbData = await getDataFromDB(uuid);
+      const dbData = await getDataFromDB(uid);
       dispatch({
         type: 'overwrite', 
         data: dbData
@@ -342,14 +341,22 @@ function dataReducer(data, action) {
       }
     }
     case 'login':{
-      // 期待呼叫這個reducer的action裡面有uuid(只是用來更新下面的uuid)
-      // (無論他之前有沒有登入過，如果沒有的話，我們)
+      // 所以我們期待在呼叫這個reducer前，要使用SignIn或CreateAccount去得到uid並更新。
       return {
         ...data,
-        uuid: action.uuid,
+        uid: action.uid,
         loggedIn: true,
       }
     }
+    /*
+    case 'logout':{
+      // 我想只是單純地停止他登入的狀況
+      return {
+        ...data,
+        loggedIn: false
+      }
+    }
+    */
     case 'setLoading': {
       return {
         ...data,
@@ -366,7 +373,7 @@ let nextid = 1;
 
 const initialData = {
   loggedIn: false,
-  uuid: null,
+  uid: null,
   loading: true,
   settings: {theme: 'light', language: 'english', color: '#07B'},
   favorite: [
