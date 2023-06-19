@@ -124,9 +124,10 @@ async function getDataFromDB(uid) {
 function SignIn(email, password) {
   return new Promise ((resolve, reject) => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((creadential) => {
+      .then((credential) => {
         console.log('Logged in successfully.');
-        resolve(creadential.user.uid);
+        uid = credential.user.uid;
+        resolve(credential.user.uid);
       })
       .catch((err) => {
         console.log('Failed to log in,', err);
@@ -149,9 +150,10 @@ function SignOut() {
 function createAccount(email, password) {
   return new Promise ((resolve, reject) => {
     createUserWithEmailAndPassword(auth, email, password)
-      .then((creadential) => {
+      .then((credential) => {
         console.log('Created successfully!');
-        resolve(creadential.user.uid);
+        uid = credential.user.uid;
+        resolve(credential.user.uid);
       })
       .catch((err) => {
         reject('Failed to create account', err);
