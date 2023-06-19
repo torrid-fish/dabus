@@ -19,7 +19,10 @@ with open('RouteStop.json', 'r', encoding="utf-8") as f:
         routes_len[key] = len(routes_data[key])
         stop_code[key] = {}
         for stop in routes_data[key]:
-            stop_code[key][stop['StopName']] = stop['StopSequence']
+            if(stop['StopName'] in stop_code[key]):
+                stop_code[key][stop['StopName'] + '_'] = stop['StopSequence']
+            else:
+                stop_code[key][stop['StopName']] = stop['StopSequence']
 
 class Auth():
 

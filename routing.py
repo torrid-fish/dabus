@@ -1,7 +1,7 @@
 import json
 import time
 from math import radians, cos, sin, asin, sqrt
-from utility import GetBusArrivalTime, GetWalkingTime
+from utility import GetBusArrivalTime, GetWalkingTime, stop_code
 
 # Parameters for walking
 walk_speed = 1.2 / 1000
@@ -52,15 +52,21 @@ def find_near_stops(lat: float, lon: float, threshold: float):
     _StopList = sorted(StopList, key= lambda stop: distance(lat, lon, stop["Lat"], stop["Lon"]))
 
     # Find the threshold
-    threshold_idx = len(_StopList)
+    # threshold_idx = len(_StopList)
+    return_list = []
+    insered = {}
     for i in range(len(_StopList)-1, -1, -1):
-        if distance(lat, lon, _StopList[i]["Lat"], _StopList[i]["Lon"]) > threshold:
-            threshold_idx = i
+        if distance(lat, lon, _StopList[i]["Lat"], _StopList[i]["Lon"]) <= threshold and \
+        '{}_{}'.format(_StopList[i]['RouteName'], _StopList[i]['Direction']) not in insered:
+            return_list.append(_StopList[i])
+            insered['{}_{}'.format(_StopList[i]['RouteName'], _StopList[i]['Direction'])] = True
+            # threshold_idx = i
         else:
-            break
+            continue
 
     # Return the acceptable stops
-    return _StopList[:threshold_idx]
+    return return_list
+    # return _StopList[:threshold_idx]
 
 def score(from_walk_distance, to_walk_distance, travel_time, waiting_time):
     """
@@ -117,9 +123,10 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
         "busType": 11,
         "score": distance(from_lat, from_lon, to_lat, to_lon) / walk_speed
     })
+    inserted = {}
+
     for i in range(len(nearstops)):
         estimated_times = GetBusArrivalTime(nearstops[i]["RouteName"], nearstops[i]["BusType"], nearstops[i]["Direction"])
-        print(estimated_times)
         if len(estimated_times) == 0:
             continue
         # print(nearstops[i]["RouteName"], nearstops[i]["StopName"], nearstops[i]["StopSequence"])
@@ -163,7 +170,8 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
             
             from_distance = distance(from_lat, from_lon, from_stop["Lat"], from_stop["Lon"])
             to_distance = distance(to_lat, to_lon, to_stop["Lat"], to_stop["Lon"])
-            possible_routes.append({
+            estimated_score = score(from_distance, to_distance, travel_time, wait_time)
+            data = {
                 "busName": to_stop["RouteName"],
                 "departureStop": from_stop["StopName"],
                 "destinationStop": to_stop["StopName"],
@@ -174,8 +182,19 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
                 "Stops": stops,
                 "BusType": to_stop["BusType"],
                 "Direction": to_stop["Direction"],
-                "score": score(from_distance, to_distance, travel_time, wait_time),
-            })
+                "score": estimated_score,
+            }
+
+            # Try to reduce result. One route only return one result
+            temp_name = '{}_{}'.format(to_stop["RouteName"], to_stop["Direction"])
+            if(temp_name in inserted):
+                if(estimated_score < possible_routes[inserted[temp_name]]['score']):
+                    possible_routes[inserted[temp_name]] = data
+                else:
+                    continue
+            else:
+                possible_routes.append(data)
+                inserted[temp_name] = len(possible_routes) - 1
         
         time.sleep(0.0125)
     
@@ -185,7 +204,7 @@ def routing(from_lat: float, from_lon: float, to_lat: float, to_lon: float):
     sorted_routes = sorted(possible_routes, key= lambda route: route["score"])
 
     # Return the optimize result
-    return sorted_routes
+    return sorted_routes[:6]
 
 
 if __name__ == '__main__':

@@ -2,6 +2,16 @@
 <html>
     <head></head>
     <body>
+        <script>
+            fetch('https://dabus.onrender.com/geoLocation?name=清華大學', {}).then((responce) => {
+                console.log(responce);
+                return responce.json();
+            }).then((data) => {
+                console.log(data);
+            }).catch((err) => {
+                console.log('qwq');
+            })
+        </script>
         <iframe
         width="450"
         height="250"
