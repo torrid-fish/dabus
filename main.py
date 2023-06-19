@@ -1,6 +1,6 @@
 from flask import Flask, request
 from routing import routing
-from utility import GetTime
+from utility import GetTime, GetGeoLocation
 import json, os
 app = Flask(__name__)
 
@@ -45,6 +45,24 @@ def notification():
             "status": "ok",
             "time": time
         }, ensure_ascii=False)
+
+@app.route('/geoLocation', methods=['GET'])
+def GeoLocation():
+    args = request.args
+    locationName = args['name']
+    result = GetGeoLocation(locationName)
+    if(result == (-1, -1)):
+        return json.dumps({
+            "status": "bad"
+        })
+    else:
+        return json.dumps({
+            "status": "ok",
+            "data": {
+                "lat": result[0],
+                "lon": result[1]
+            }
+        })
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8080))

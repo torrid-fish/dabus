@@ -196,6 +196,19 @@ def GetWalkingTime(start_lat, start_lon, end_lat, end_lon):
     except:
         return -1
 
+def GetGeoLocation(name):
+    """
+    Get latitude and longitude from google maps API
+    """
+    google_api_key = 'AIzaSyAxFtQQD7u-IlVGquIA9HLBEcJadijtkD8'
+    request_url = 'https://maps.googleapis.com/maps/api/geocode/json?key={}&address={}'.format(google_api_key, name)
+    result = json.loads(requests.request("GET", request_url, headers={}, data={}).text)
+
+    if(result['status'] == "OK" and len(result['results']) != 0):
+        return (result['results'][0]['geometry']['location']['lat'], result['results'][0]['geometry']['location']['lng'])
+    else:
+        return (-1, -1)
+
 if __name__ == '__main__':
     bus_name = '182'
     # bus_name, bus_type, direction, stop_sequence
