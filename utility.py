@@ -155,7 +155,7 @@ def GetBusArrivalTime(bus_name, bus_type, direction):
                     else:
                         break
                 elif(stop['StopStatus'] == 0):
-                    src_trans_time = datetime.fromisoformat(stop['SrcTransTime']).replace(tzinfo=None)
+                    src_trans_time = datetime.fromisoformat(stop['SrcTransTime'])
                     trans_time_delta = int((current_time - src_trans_time).total_seconds())
                     estimate_time = (int(stop['EstimateTime']) - trans_time_delta)
                     if(estimate_time < 0):
